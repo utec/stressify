@@ -1,0 +1,42 @@
+//PARAMETERS
+
+def url = "https://jsonplaceholder.typicode.com/posts?userId="+userid;
+def headers = ['Accept':'application/json']
+
+
+// ################
+// DOUNT TOUCH THIS
+// ################
+
+Date start  = new Date()
+long startMillis = start.getTime();
+
+// set url
+def connection = new URL(url).openConnection() as HttpURLConnection
+
+// set some headers
+headers.each{ k, v -> connection.setRequestProperty( k, v )}
+
+connection.connect()
+
+Date now  = new Date()
+long nowMillis = now.getTime();
+
+// prepare report
+
+def output = new String[6]
+
+output[0] = start.format( 'yyyy-M-d' )
+
+output[1] = start.format( 'HH-m-ss-SSS' )
+
+output[2] = now.format( 'HH-m-ss-SSS' )
+
+output[3] = connection.responseCode
+
+output[4] = JsonPath.parse(connection.inputStream.text).read('$[0].title') != null ? 'true' : 'false'
+
+output[5] = nowMillis - startMillis
+
+return output;
+
