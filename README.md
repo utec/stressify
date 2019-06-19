@@ -31,7 +31,7 @@ java -jar smart-stressor.jar "data.csv" "script.txt" "report.csv" "date,start ti
 
 - Download it from
 
- [https://github.com/utec/smart-stressor/archive/v1.0.0.zip](https://github.com/utec/smart-stressor/archive/v1.0.0.zip)
+ [programmatic-resource-stressor-1.0.0.jar](https://github.com/utec/programmatic-resource-stressor/releases/download/v1.0.0/programmatic-resource-stressor-1.0.0.jar)
 
 - Or compile from source code
 
