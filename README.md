@@ -1,5 +1,7 @@
-# Smart Stressor
+# Programmatic Resource Stressor
 100% pure Java application designed to stress http endpoints and  measure its performance in an easy way.
+
+![https://cdn.lynda.com/courses/784297-636924010683639849_270x480_thumb.jpg](https://cdn.lynda.com/courses/784297-636924010683639849_270x480_thumb.jpg)
 
 # Getting Started
 
