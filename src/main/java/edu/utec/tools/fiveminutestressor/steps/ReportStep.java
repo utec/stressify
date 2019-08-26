@@ -1,10 +1,10 @@
-package edu.utec.tools.smarth_stressor.steps;
+package edu.utec.tools.fiveminutestressor.steps;
 
 import java.io.FileWriter;
 import java.util.List;
 
 import edu.utec.common.csv.CSVUtil;
-import edu.utec.tools.smarth_stressor.base.ExecutableStep;
+import edu.utec.tools.fiveminutestressor.core.ExecutableStep;
 
 public class ReportStep implements ExecutableStep {
 

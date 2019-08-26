@@ -1,4 +1,4 @@
-package edu.utec.tools.smarth_stressor.steps;
+package edu.utec.tools.fiveminutestressor.steps;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,7 +9,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import edu.utec.tools.smarth_stressor.base.ExecutableStep;
+import edu.utec.tools.fiveminutestressor.core.ExecutableStep;
 
 public class CSVReaderStep implements ExecutableStep {
 

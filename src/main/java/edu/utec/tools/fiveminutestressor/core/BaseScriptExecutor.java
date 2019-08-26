@@ -1,4 +1,4 @@
-package edu.utec.tools.smarth_stressor.base;
+package edu.utec.tools.fiveminutestressor.core;
 
 public interface BaseScriptExecutor {
   public Object getOutput();

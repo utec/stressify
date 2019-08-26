@@ -1,4 +1,4 @@
-package edu.utec.tools.smarth_stressor.oauth1;
+package edu.utec.tools.fiveminutestressor.oauth1;
 
 public class Oauth1Request {
 
