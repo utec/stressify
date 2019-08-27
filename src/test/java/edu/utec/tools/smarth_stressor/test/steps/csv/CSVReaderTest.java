@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import edu.utec.common.csv.CSVUtil;
-import edu.utec.tools.smarth_stressor.steps.CSVReaderStep;
+import edu.utec.tools.fiveminutestressor.steps.CSVReaderStep;
 import junit.framework.TestCase;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

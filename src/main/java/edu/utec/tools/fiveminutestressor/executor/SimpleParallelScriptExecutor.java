@@ -1,8 +1,8 @@
-package edu.utec.tools.smarth_stressor.executor;
+package edu.utec.tools.fiveminutestressor.executor;
 
 import java.util.concurrent.CountDownLatch;
 
-import edu.utec.tools.smarth_stressor.base.BaseScriptExecutor;
+import edu.utec.tools.fiveminutestressor.core.BaseScriptExecutor;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 

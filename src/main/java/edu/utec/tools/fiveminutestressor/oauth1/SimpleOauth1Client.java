@@ -1,4 +1,4 @@
-package edu.utec.tools.smarth_stressor.oauth1;
+package edu.utec.tools.fiveminutestressor.oauth1;
 
 import java.io.InputStream;
 import java.io.StringWriter;

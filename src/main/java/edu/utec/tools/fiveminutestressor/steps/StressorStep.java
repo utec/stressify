@@ -1,4 +1,4 @@
-package edu.utec.tools.smarth_stressor.steps;
+package edu.utec.tools.fiveminutestressor.steps;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -10,11 +10,11 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.csv.CSVRecord;
 
 import edu.utec.common.file.FileUtil;
-import edu.utec.tools.smarth_stressor.base.BaseScriptExecutor;
-import edu.utec.tools.smarth_stressor.base.ExecutableStep;
-import edu.utec.tools.smarth_stressor.common.ScriptImports;
-import edu.utec.tools.smarth_stressor.executor.SimpleContinuousScriptExecutor;
-import edu.utec.tools.smarth_stressor.executor.SimpleParallelScriptExecutor;
+import edu.utec.tools.fiveminutestressor.common.ScriptImports;
+import edu.utec.tools.fiveminutestressor.core.BaseScriptExecutor;
+import edu.utec.tools.fiveminutestressor.core.ExecutableStep;
+import edu.utec.tools.fiveminutestressor.executor.SimpleContinuousScriptExecutor;
+import edu.utec.tools.fiveminutestressor.executor.SimpleParallelScriptExecutor;
 import groovy.lang.Binding;
 
 public class StressorStep implements ExecutableStep {
