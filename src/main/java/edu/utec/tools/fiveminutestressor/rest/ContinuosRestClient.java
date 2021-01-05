@@ -30,16 +30,19 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       performGetRequest(url, headers, assertScript);
       break;
     case "POST":
-      performPostRequest(url, headers, body, assertScript);
+      performRequest(url, headers, body, assertScript, "POST");
+      break;
+    case "PUT":
+      performRequest(url, headers, body, assertScript, "PUT");
       break;
     default:
-      output[3] = "Error: Method not implemented yet";
+      output[3] = "Error: Method not implemented yet:"+method;
       break;
     }
   }
 
-  public void performPostRequest(String url, ArrayList<HashMap<String, String>> headers,
-          String body, String assertScript) {
+  public void performRequest(String url, ArrayList<HashMap<String, String>> headers,
+          String body, String assertScript, String method) {
     try {
 
       Date start = new Date();
@@ -49,7 +52,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
       con.setDoOutput(true);
 
-      con.setRequestMethod("POST");
+      con.setRequestMethod(method);
 
       // add request header
       for (HashMap<String, String> headerData : headers) {
@@ -66,7 +69,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       }
 
       int responseCode = con.getResponseCode();
-      System.out.println("\nSending 'POST' request to URL : " + url);
+      System.out.println("\nSending '"+method+"' request to URL : " + url);
       System.out.println("Response Code : " + responseCode);
 
       BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -106,7 +109,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
   }
 
   public boolean evaluateAssert(String response, String script) {
-
+    System.out.println("script : " + script);
     Binding binding = new Binding();
     binding.setVariable("response", response);
     GroovyShell shell = new GroovyShell(binding);

@@ -11,7 +11,11 @@ import java.util.regex.Pattern;
 public class VariableUtil {
 
   public static String replaceVariablesInString(String rawString,
-          HashMap<String, String> variables) {
+      HashMap<String, String> variables) {
+
+    if (variables == null || variables.isEmpty()) {
+      return rawString;
+    }
 
     String regex = "(\\$\\{[\\w\\^\\$\\s]+\\})";
     Matcher m = Pattern.compile(regex).matcher(rawString);
@@ -71,7 +75,7 @@ public class VariableUtil {
   }
 
   public static ArrayList<HashMap<String, String>> replaceInHeaderValues(
-          ArrayList<HashMap<String, String>> headers, HashMap<String, String> variables) {
+      ArrayList<HashMap<String, String>> headers, HashMap<String, String> variables) {
 
     ArrayList<HashMap<String, String>> newHeaders = new ArrayList<HashMap<String, String>>();
 
@@ -79,9 +83,9 @@ public class VariableUtil {
       HashMap<String, String> header = new HashMap<String, String>();
       Iterator<?> it = headerData.entrySet().iterator();
       while (it.hasNext()) {
-        Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
+        Map.Entry<?, ?> pair = (Map.Entry<?, ?>) it.next();
         header.put("" + pair.getKey(),
-                VariableUtil.replaceVariablesInString("" + pair.getValue(), variables));
+            VariableUtil.replaceVariablesInString("" + pair.getValue(), variables));
       }
 
       newHeaders.add(header);

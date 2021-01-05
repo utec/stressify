@@ -6,9 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.JTextArea;
-
 import edu.utec.common.performance.MeasureUtil;
 import edu.utec.tools.fiveminutestressor.common.ScriptImports;
 import edu.utec.tools.fiveminutestressor.steps.CSVReaderStep;
@@ -34,18 +32,22 @@ public class SimpleGraphicStressor {
 
   @SuppressWarnings("unchecked")
   public void perform(String csvDataPath, String reportPath, String reportColumns, String mode,
-          String threads, String url, String method, String body,
-          ArrayList<HashMap<String, String>> headers, String assertScript) throws Exception {
+      String threads, String url, String method, String body,
+      ArrayList<HashMap<String, String>> headers, String assertScript) throws Exception {
 
     clearLog();
     long before = new Date().getTime();
 
     log("Stress starting...");
     log("");
-
     if (csvDataPath == null || csvDataPath.equals("")) {
-      log("Data csv file is required. Go to data section and configure it!");
-      return;
+      log("Data csv file is not configured. Stresss will not use variables."
+          + " Go to data section and configure it if you want to use variables!");
+    }
+    
+    if (assertScript == null || assertScript.equals("")) {
+      log("assert script is not configured.");
+      assertScript = "return true";
     }
 
     if (reportPath == null || reportPath.equals("") || reportPath.equals(File.separator)) {
@@ -73,21 +75,35 @@ public class SimpleGraphicStressor {
     log("report file:" + reportPath);
     log("report columns:" + reportColumns);
     log("mode:" + mode);
-    log("virtual users:" + threads);    
+    log("virtual users:" + threads);
 
     CSVReaderStep csvReaderStep = new CSVReaderStep();
-    List<?> csvRecords = (List<?>) csvReaderStep.execute(new String[] { csvDataPath });
+    HashMap<String, Object> csvStepParameters = new HashMap<String, Object>();
+    csvStepParameters.put("csvDataPath", csvDataPath);
+    Object csvRecords =  csvReaderStep.execute(csvStepParameters);
 
-    log("csv rows:" + (csvRecords.size()-1));
     assertScript = String.format("%s%n%n%s", ScriptImports.getDefaultImports(), assertScript);
-    
+
     StressorWithClientStep stressorWithClientStep = new StressorWithClientStep();
-    List<List<String>> dataStress = (List<List<String>>) stressorWithClientStep.execute(
-            new Object[] { method, url, body, headers, assertScript, mode, threads, csvRecords });
+    HashMap<String, Object> stressorStepParameters = new HashMap<String, Object>();
+    stressorStepParameters.put("method", method);
+    stressorStepParameters.put("url", url);
+    stressorStepParameters.put("body", body);
+    stressorStepParameters.put("headers", headers);
+    stressorStepParameters.put("assertScript", assertScript);
+    stressorStepParameters.put("mode", mode);
+    stressorStepParameters.put("threads", threads);
+    stressorStepParameters.put("csvRecords", csvRecords);
+    List<List<String>> dataStress =
+        (List<List<String>>) stressorWithClientStep.execute(stressorStepParameters);
 
     ReportStep reportStep = new ReportStep();
     List<String> reportColumnValues = Arrays.asList(reportColumns.split(","));
-    Object result = reportStep.execute(new Object[] { dataStress, reportColumnValues, reportPath });
+    HashMap<String, Object> reportStepParameters = new HashMap<String, Object>();
+    reportStepParameters.put("dataStress", dataStress);
+    reportStepParameters.put("reportColumnValues", reportColumnValues);
+    reportStepParameters.put("reportPath", reportPath);
+    Object result = reportStep.execute(reportStepParameters);
 
     long after = new Date().getTime();
 

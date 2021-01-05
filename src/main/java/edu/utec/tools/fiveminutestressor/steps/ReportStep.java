@@ -1,6 +1,7 @@
 package edu.utec.tools.fiveminutestressor.steps;
 
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.utec.common.csv.CSVUtil;
@@ -9,11 +10,11 @@ import edu.utec.tools.fiveminutestressor.core.ExecutableStep;
 public class ReportStep implements ExecutableStep {
 
   @SuppressWarnings("unchecked")
-  public Object execute(Object[] args) throws Exception {
+  public Object execute(HashMap<String, Object> parameters) throws Exception {
 
-    List<List<String>> dataStress = (List<List<String>>) args[0];
-    List<String> headers = (List<String>) args[1];
-    String path = "" + args[2];
+    List<List<String>> dataStress = (List<List<String>>) parameters.get("dataStress");
+    List<String> headers = (List<String>) parameters.get("reportColumnValues");
+    String path = (String) parameters.get("reportPath");
 
     FileWriter writer = new FileWriter(path);
 

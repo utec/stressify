@@ -3,20 +3,30 @@ package edu.utec.tools.fiveminutestressor.steps;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
 import edu.utec.tools.fiveminutestressor.core.ExecutableStep;
 
 public class CSVReaderStep implements ExecutableStep {
 
   @SuppressWarnings("resource")
-  public Object execute(Object[] args) throws Exception {
+  public Object execute(HashMap<String, Object> parameters) throws Exception {
 
-    String fileName = "" + args[0];
+    if (parameters == null || parameters.size() == 0) {
+      throw new Exception("Internal error. CSV reader step can not read incoming parameters");
+    }
+
+    String fileName = null;
+
+    if (parameters.get("csvDataPath") == null
+        || ((String) parameters.get("csvDataPath")).isEmpty()) {
+      return null;
+    } else {
+      fileName = (String) parameters.get("csvDataPath");
+    }
 
     FileReader fileReader = null;
 
