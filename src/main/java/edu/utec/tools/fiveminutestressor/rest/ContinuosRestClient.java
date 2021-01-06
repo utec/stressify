@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 import edu.utec.tools.fiveminutestressor.core.BaseScriptExecutor;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -22,7 +23,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
   public void performRequest(String method, String url, String body,
           ArrayList<HashMap<String, String>> headers, String assertScript) {
 
-    output = new String[6];
+    output = new String[7];
 
     switch (method) {
 
@@ -109,13 +110,11 @@ public class ContinuosRestClient implements BaseScriptExecutor {
   }
 
   public boolean evaluateAssert(String response, String script) {
-    System.out.println("script : " + script);
     Binding binding = new Binding();
     binding.setVariable("response", response);
     GroovyShell shell = new GroovyShell(binding);
-    Boolean assertResult = (Boolean) shell.evaluate(script);
-
-    return assertResult.booleanValue();
+    Object result = shell.evaluate(script);
+    return result == null;
   }
 
   public void performGetRequest(String url, ArrayList<HashMap<String, String>> headers,
@@ -157,27 +156,29 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       long nowMillis = now.getTime();
 
       in.close();
-
+      
+      output[0] = UUID.randomUUID().toString();
+          
       SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy:MM:ddd");
-      output[0] = dateFormat1.format(start);
+      output[1] = dateFormat1.format(start);
 
       SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss-SSS");
-      output[1] = dateFormat2.format(start);
+      output[2] = dateFormat2.format(start);
 
-      output[2] = dateFormat2.format(now);
-      output[3] = "" + responseCode;
+      output[3] = dateFormat2.format(now);
+      output[4] = "" + responseCode;
 
       if (assertScript != null && !assertScript.equals("")) {
-        output[4] = "" + evaluateAssert(response.toString(), assertScript);
+        output[5] = "" + evaluateAssert(response.toString(), assertScript);
       } else {
-        output[4] = "-";
+        output[5] = "-";
       }
 
-      output[5] = "" + (nowMillis - startMillis);
+      output[6] = "" + (nowMillis - startMillis);
 
     } catch (Exception ex) {
       ex.printStackTrace();
-      output[3] = "Error:" + ex.getMessage();
+      output[4] = "Error:" + ex.getMessage();
     }
   }
 

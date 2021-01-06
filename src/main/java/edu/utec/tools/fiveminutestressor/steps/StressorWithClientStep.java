@@ -25,7 +25,11 @@ public class StressorWithClientStep implements ExecutableStep {
     String body = (String) parameters.get("body");
     ArrayList<HashMap<String, String>> headers =
         (ArrayList<HashMap<String, String>>) parameters.get("headers");
-    String assertScript = (String) parameters.get("assertScript");
+    
+    String assertScript = null;
+    if(parameters.get("assertScript")!=null) {
+      assertScript = (String) parameters.get("assertScript");
+    }
     String mode = (String) parameters.get("mode");
     String threadsValue = (String) parameters.get("threads");
     List<?> csvRecords = null;

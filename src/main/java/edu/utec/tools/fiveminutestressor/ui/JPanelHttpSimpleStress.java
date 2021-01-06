@@ -47,6 +47,7 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jLabelDataCsvFilePath = new javax.swing.JLabel();
         jTextFieldDataCsvFilePath = new javax.swing.JTextField();
         jButtonOpenDataFileSelector = new javax.swing.JButton();
+        jCheckBoxAddMetadataToReportName = new javax.swing.JCheckBox();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextAreaStressLog = new javax.swing.JTextArea();
         jLabelVirtualUsers = new javax.swing.JLabel();
@@ -55,11 +56,6 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jComboBoxStressMode = new javax.swing.JComboBox<>();
 
         jComboBoxMethod.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GET", "POST", "DELETE", "PUT" }));
-        jComboBoxMethod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxMethodActionPerformed(evt);
-            }
-        });
 
         jButtonStress.setText("Start Stress");
 
@@ -157,6 +153,8 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
 
         jButtonOpenDataFileSelector.setText("...");
 
+        jCheckBoxAddMetadataToReportName.setText("Add url, method, mode, threads and date to the name of report");
+
         javax.swing.GroupLayout jPanelReportLayout = new javax.swing.GroupLayout(jPanelReport);
         jPanelReport.setLayout(jPanelReportLayout);
         jPanelReportLayout.setHorizontalGroup(
@@ -164,17 +162,6 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
             .addGroup(jPanelReportLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelReportLayout.createSequentialGroup()
-                        .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldReportFolderLocation)
-                            .addComponent(jTextFieldReportName)
-                            .addGroup(jPanelReportLayout.createSequentialGroup()
-                                .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelReportName, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelReportFolderLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 326, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonOpenReportFolderSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReportLayout.createSequentialGroup()
                         .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldDataCsvFilePath)
@@ -182,7 +169,19 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                                 .addComponent(jLabelDataCsvFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonOpenDataFileSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonOpenDataFileSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReportLayout.createSequentialGroup()
+                        .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jCheckBoxAddMetadataToReportName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldReportFolderLocation, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldReportName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelReportLayout.createSequentialGroup()
+                                .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelReportName, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelReportFolderLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 326, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonOpenReportFolderSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelReportLayout.setVerticalGroup(
@@ -204,7 +203,9 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                 .addComponent(jLabelReportName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldReportName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBoxAddMetadataToReportName)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPaneHttpOptions.addTab("Settings", jPanelReport);
@@ -216,11 +217,6 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jLabelVirtualUsers.setText("Enter the number of virtual users or threads");
 
         jTextFieldThreadsNumber.setText("1");
-        jTextFieldThreadsNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldThreadsNumberActionPerformed(evt);
-            }
-        });
 
         jLabelStressMode.setText("Select stress mode");
 
@@ -280,23 +276,6 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldThreadsNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThreadsNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldThreadsNumberActionPerformed
-
-  private void jComboBoxMethodActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
-  }
-
-  private void jComboBoxStressModeActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
-  }
-
-  // TODO implement clear method to reset view
-  public void clear() {
-
-  }
-
   public javax.swing.JButton getjButtonStress() {
     return jButtonStress;
   }
@@ -349,10 +328,15 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
     return jTextAreaStressLog;
   }
 
+  public javax.swing.JCheckBox getjCheckBoxAddMetadataToReportName() {
+    return jCheckBoxAddMetadataToReportName;
+  }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonOpenDataFileSelector;
     private javax.swing.JButton jButtonOpenReportFolderSelector;
     private javax.swing.JButton jButtonStress;
+    private javax.swing.JCheckBox jCheckBoxAddMetadataToReportName;
     private javax.swing.JComboBox jComboBoxMethod;
     private javax.swing.JComboBox<String> jComboBoxStressMode;
     private javax.swing.JLabel jLabelDataCsvFilePath;

@@ -2,24 +2,19 @@ package edu.utec.tools.fiveminutestressor.controllers.stress;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import edu.utec.tools.fiveminutestressor.common.AssertsHelper;
 import edu.utec.tools.fiveminutestressor.common.StressorConstants;
-import edu.utec.tools.fiveminutestressor.common.StringHelper;
 import edu.utec.tools.fiveminutestressor.mode.SimpleGraphicStressor;
 import edu.utec.tools.fiveminutestressor.ui.MainView;
 
@@ -38,6 +33,7 @@ public class SimpleStressorController implements ActionListener {
   private JButton jButtonStress;
   private JComboBox<?> jComboBoxMethod;
   private JComboBox<?> jComboBoxStressMode;
+  private JCheckBox jCheckBoxAddMetadataToReportName;
 
   private SimpleGraphicStressor graphicStressor;
 
@@ -64,29 +60,13 @@ public class SimpleStressorController implements ActionListener {
         this.mainView.getPanelHttpTest().getjTextFieldDataCsvFilePath();
     this.jComboBoxStressMode = this.mainView.getPanelHttpTest().getjComboBoxStressMode();
     this.jTextFieldThreadsNumber = this.mainView.getPanelHttpTest().getjTextFieldThreadsNumber();
+    this.jCheckBoxAddMetadataToReportName =
+        this.mainView.getPanelHttpTest().getjCheckBoxAddMetadataToReportName();
 
   }
 
   public void initializeActionListeners() {
     jButtonStress.addActionListener(this);
-
-    jTextFieldUrl.getDocument().addDocumentListener(new DocumentListener() {
-      @Override
-      public void insertUpdate(DocumentEvent e) {
-        onUrlChange(jTextFieldUrl.getText());
-      }
-
-      @Override
-      public void removeUpdate(DocumentEvent e) {
-        onUrlChange(jTextFieldUrl.getText());
-      }
-
-      @Override
-      public void changedUpdate(DocumentEvent e) {
-        onUrlChange(jTextFieldUrl.getText());
-      }
-    });
-
   }
 
   @Override
@@ -98,19 +78,6 @@ public class SimpleStressorController implements ActionListener {
         ex.printStackTrace();
         String message = ex.getMessage();
         JOptionPane.showMessageDialog(new JFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
-      }
-    }
-  }
-
-  public void onUrlChange(String urlString) {
-    if (urlString != null && !urlString.isEmpty()) {
-      try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String date = sdf.format(new Date());
-        String reportName = "report-"+StringHelper.sanitizeUrlToFileLocation(urlString)+"-"+date+".csv";
-        jTextFieldReportName.setText(reportName);
-      } catch (Exception e) {
-        // TODO codereview
       }
     }
   }
@@ -127,7 +94,6 @@ public class SimpleStressorController implements ActionListener {
     AssertsHelper.ensureNotNullEmptyString(reportFolderPath, "[report folder location]");
     String reportName = jTextFieldReportName.getText();
     AssertsHelper.ensureNotNullEmptyString(reportFolderPath, "[report name]");
-    String reportPath = reportFolderPath + File.separator + reportName;
     String reportColumns = StressorConstants.REPORT_COLUMN_NAMES;
 
     String url = jTextFieldUrl.getText();
@@ -152,9 +118,10 @@ public class SimpleStressorController implements ActionListener {
     String assertScript = this.jTextAreaAssertResponseScript.getText();
     String mode = jComboBoxStressMode.getSelectedItem().toString();
     String threads = jTextFieldThreadsNumber.getText();
+    boolean addMetadataToReport = jCheckBoxAddMetadataToReportName.isSelected();
 
-    graphicStressor.perform(csvDataPath, reportPath, reportColumns, mode, threads, url, method,
-        body, headers, assertScript);
+    graphicStressor.perform(csvDataPath, reportFolderPath, reportName, addMetadataToReport,
+        reportColumns, mode, threads, url, method, body, headers, assertScript);
   }
 
   public MainView getMainView() {

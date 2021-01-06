@@ -31,9 +31,10 @@ public class SimpleGraphicStressor {
   }
 
   @SuppressWarnings("unchecked")
-  public void perform(String csvDataPath, String reportPath, String reportColumns, String mode,
-      String threads, String url, String method, String body,
-      ArrayList<HashMap<String, String>> headers, String assertScript) throws Exception {
+  public void perform(String csvDataPath, String reportFolderPath, String reportName,
+      boolean addMetadataToReport, String reportColumns, String mode, String threads, String url,
+      String method, String body, ArrayList<HashMap<String, String>> headers, String assertScript)
+      throws Exception {
 
     clearLog();
     long before = new Date().getTime();
@@ -44,15 +45,9 @@ public class SimpleGraphicStressor {
       log("Data csv file is not configured. Stresss will not use variables."
           + " Go to data section and configure it if you want to use variables!");
     }
-    
+
     if (assertScript == null || assertScript.equals("")) {
       log("assert script is not configured.");
-      assertScript = "return true";
-    }
-
-    if (reportPath == null || reportPath.equals("") || reportPath.equals(File.separator)) {
-      log("Report path file is required. Go to report section and configure it!");
-      return;
     }
 
     if (reportColumns == null || reportColumns.equals("")) {
@@ -72,7 +67,6 @@ public class SimpleGraphicStressor {
 
     log("Parameters:");
     log("data file:" + csvDataPath);
-    log("report file:" + reportPath);
     log("report columns:" + reportColumns);
     log("mode:" + mode);
     log("virtual users:" + threads);
@@ -80,9 +74,15 @@ public class SimpleGraphicStressor {
     CSVReaderStep csvReaderStep = new CSVReaderStep();
     HashMap<String, Object> csvStepParameters = new HashMap<String, Object>();
     csvStepParameters.put("csvDataPath", csvDataPath);
-    Object csvRecords =  csvReaderStep.execute(csvStepParameters);
+    Object csvRecords = csvReaderStep.execute(csvStepParameters);
 
-    assertScript = String.format("%s%n%n%s", ScriptImports.getDefaultImports(), assertScript);
+    if (assertScript != null && !assertScript.isEmpty()) {
+      StringBuilder scriptBuilder = new StringBuilder();
+      scriptBuilder.append(ScriptImports.getDefaultImports() + "\n");
+      scriptBuilder.append(ScriptImports.getDefaultFunctions() + "\n");
+      scriptBuilder.append(assertScript + "\n");
+      assertScript = scriptBuilder.toString();
+    }
 
     StressorWithClientStep stressorWithClientStep = new StressorWithClientStep();
     HashMap<String, Object> stressorStepParameters = new HashMap<String, Object>();
@@ -102,7 +102,13 @@ public class SimpleGraphicStressor {
     HashMap<String, Object> reportStepParameters = new HashMap<String, Object>();
     reportStepParameters.put("dataStress", dataStress);
     reportStepParameters.put("reportColumnValues", reportColumnValues);
-    reportStepParameters.put("reportPath", reportPath);
+    reportStepParameters.put("reportFolderPath", reportFolderPath);
+    reportStepParameters.put("reportName", reportName);
+    reportStepParameters.put("addMetadataToReport", addMetadataToReport);
+    reportStepParameters.put("method", method);
+    reportStepParameters.put("url", url);
+    reportStepParameters.put("mode", mode);
+    reportStepParameters.put("threads", threads);
     Object result = reportStep.execute(reportStepParameters);
 
     long after = new Date().getTime();
