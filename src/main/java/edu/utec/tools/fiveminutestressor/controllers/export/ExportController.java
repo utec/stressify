@@ -26,11 +26,11 @@ public class ExportController {
   private JTable jTableHeaders;
   private JTextArea jTextAreaPostBody;
   private JTextArea jTextAreaAssertResponseScript;
-  private JTextField jTextFieldReportFilepath;
-  private JTextField jTextFieldReportColumnNames;
+  private JTextField jTextFieldReportFolderLocation;
+  private JTextField jTextFieldReportName;
   private JTextField jTextFieldDataCsvFilePath;
   private JComboBox<?> jComboBoxStressMode;
-  private JTextField jTextFieldVirtualUsers;
+  private JTextField jTextFieldThreadsNumber;
 
   public ExportController(MainView mainView) {
     super();
@@ -45,13 +45,12 @@ public class ExportController {
     this.jTextAreaPostBody = this.mainView.getPanelHttpTest().getjTextAreaPostBody();
     this.jTextAreaAssertResponseScript =
         this.mainView.getPanelHttpTest().getjTextAreaAssertResponseScript();
-    this.jTextFieldReportFilepath = this.mainView.getPanelHttpTest().getjTextFieldReportFilePath();
-    this.jTextFieldReportColumnNames =
-        this.mainView.getPanelHttpTest().getjTextFieldReportColumnNames();
+    this.jTextFieldReportFolderLocation = this.mainView.getPanelHttpTest().getjTextFieldReportFolderLocation();
+    this.jTextFieldReportName = this.mainView.getPanelHttpTest().getjTextFieldReportName();
     this.jTextFieldDataCsvFilePath =
         this.mainView.getPanelHttpTest().getjTextFieldDataCsvFilePath();
     this.jComboBoxStressMode = this.mainView.getPanelHttpTest().getjComboBoxStressMode();
-    this.jTextFieldVirtualUsers = this.mainView.getPanelHttpTest().getjTextFieldVirtualUsers();
+    this.jTextFieldThreadsNumber = this.mainView.getPanelHttpTest().getjTextFieldThreadsNumber();
   }
 
   public void performExport() {
@@ -62,11 +61,11 @@ public class ExportController {
     stress.setHttpHeaders(getHeaders());
     stress.setBody(this.jTextAreaPostBody.getText());
     stress.setAssertScript(this.jTextAreaAssertResponseScript.getText());
-    stress.setReportPath(this.jTextFieldReportFilepath.getText());
-    stress.setReportColumns(this.jTextFieldReportColumnNames.getText());
+    stress.setReportFolderPath(this.jTextFieldReportFolderLocation.getText());
+    stress.setReportName(this.jTextFieldReportName.getText());
     stress.setCsvDataPath(this.jTextFieldDataCsvFilePath.getText());
     stress.setMode(this.jComboBoxStressMode.getSelectedItem().toString());
-    stress.setVirtualUsers(Integer.parseInt(this.jTextFieldVirtualUsers.getText()));
+    stress.setThreadNumber(Integer.parseInt(this.jTextFieldThreadsNumber.getText()));
 
     ObjectMapper mapper = new ObjectMapper();
     String jsonInString = null;

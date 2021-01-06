@@ -9,11 +9,11 @@ public class Stress {
   private ArrayList<HttpHeader> httpHeaders;
   private String body;
   private String assertScript;
-  private String reportPath;
-  private String reportColumns;
+  private String reportFolderPath;
+  private String reportName;
   private String csvDataPath;
   private String mode;
-  private int virtualUsers;
+  private int threadNumber;
 
   public String getUrl() {
     return url;
@@ -55,20 +55,20 @@ public class Stress {
     this.assertScript = assertScript;
   }
 
-  public String getReportPath() {
-    return reportPath;
+  public String getReportFolderPath() {
+    return reportFolderPath;
   }
 
-  public void setReportPath(String reportPath) {
-    this.reportPath = reportPath;
+  public void setReportFolderPath(String reportFolderPath) {
+    this.reportFolderPath = reportFolderPath;
   }
 
-  public String getReportColumns() {
-    return reportColumns;
+  public String getReportName() {
+    return reportName;
   }
 
-  public void setReportColumns(String reportColumns) {
-    this.reportColumns = reportColumns;
+  public void setReportName(String reportName) {
+    this.reportName = reportName;
   }
 
   public String getCsvDataPath() {
@@ -87,12 +87,11 @@ public class Stress {
     this.mode = mode;
   }
 
-  public int getVirtualUsers() {
-    return virtualUsers;
+  public int getThreadNumber() {
+    return threadNumber;
   }
 
-  public void setVirtualUsers(int virtualUsers) {
-    this.virtualUsers = virtualUsers;
+  public void setThreadNumber(int threadNumber) {
+    this.threadNumber = threadNumber;
   }
-
 }

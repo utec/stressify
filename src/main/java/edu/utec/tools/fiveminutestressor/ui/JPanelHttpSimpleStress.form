@@ -27,11 +27,23 @@
                       <Component id="jTextFieldUrl" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonStress" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonClearLog" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonExport" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                      <Component id="jLabelVirtualUsers" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabelStressMode" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jComboBoxStressMode" pref="103" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldThreadsNumber" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jButtonStress" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -48,15 +60,21 @@
                   <Component id="jTextFieldUrl" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPaneHttpOptions" min="-2" pref="194" max="-2" attributes="0"/>
+              <Component id="jTabbedPaneHttpOptions" min="-2" pref="234" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonStress" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonClearLog" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonExport" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelVirtualUsers" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldThreadsNumber" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane4" pref="119" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelStressMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxStressMode" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonStress" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane4" pref="50" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -82,7 +100,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonStress">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Stress"/>
+        <Property name="text" type="java.lang.String" value="Start Stress"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPaneHttpOptions">
@@ -112,7 +130,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="138" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="178" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -167,7 +185,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="139" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="179" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -214,7 +232,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="139" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="179" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -241,8 +259,8 @@
         <Container class="javax.swing.JPanel" name="jPanelReport">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Report">
-                <Property name="tabTitle" type="java.lang.String" value="Report"/>
+              <JTabbedPaneConstraints tabName="Settings">
+                <Property name="tabTitle" type="java.lang.String" value="Settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -253,14 +271,31 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextFieldReportFolderLocation" max="32767" attributes="0"/>
-                          <Component id="jTextFieldReportName" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelReportFolderLocation" min="-2" pref="230" max="-2" attributes="0"/>
-                                  <Component id="jLabelReportName" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldReportFolderLocation" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldReportName" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabelReportName" min="-2" pref="230" max="-2" attributes="0"/>
+                                          <Component id="jLabelReportFolderLocation" min="-2" pref="322" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="326" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="461" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonOpenReportFolderSelector" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTextFieldDataCsvFilePath" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabelDataCsvFilePath" min="-2" pref="322" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonOpenDataFileSelector" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -271,14 +306,24 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelDataCsvFilePath" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTextFieldDataCsvFilePath" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonOpenDataFileSelector" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelReportFolderLocation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldReportFolderLocation" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTextFieldReportFolderLocation" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonOpenReportFolderSelector" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelReportName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTextFieldReportName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="312" max="32767" attributes="0"/>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -286,7 +331,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabelReportFolderLocation">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter the prefered report location "/>
+                <Property name="text" type="java.lang.String" value="Select or enter the report folder location "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldReportFolderLocation">
@@ -298,15 +343,27 @@
                 <Property name="text" type="java.lang.String" value="Enter the report name"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="jButtonOpenReportFolderSelector">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="..."/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelDataCsvFilePath">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Select or enter the csv file with variables"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextFieldDataCsvFilePath">
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonOpenDataFileSelector">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="..."/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonClearLog">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Clear log"/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane4">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -314,7 +371,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextAreaHumanStressLog">
+        <Component class="javax.swing.JTextArea" name="jTextAreaStressLog">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -322,10 +379,36 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonExport">
+    <Component class="javax.swing.JLabel" name="jLabelVirtualUsers">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Export"/>
+        <Property name="text" type="java.lang.String" value="Enter the number of virtual users or threads"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldThreadsNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldThreadsNumberActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelStressMode">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Select stress mode"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxStressMode">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="sequential"/>
+            <StringItem index="1" value="parallel"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

@@ -28,7 +28,7 @@ public class StressorWithClientStep implements ExecutableStep {
     String assertScript = (String) parameters.get("assertScript");
     String mode = (String) parameters.get("mode");
     String threadsValue = (String) parameters.get("threads");
-    List<CSVRecord> csvRecords = null;
+    List<?> csvRecords = null;
     CSVRecord csvHeader = null;
     if (parameters.get("csvRecords") != null && parameters.get("csvRecords") instanceof List) {
       csvRecords = (List<CSVRecord>) parameters.get("csvRecords");
@@ -69,7 +69,7 @@ public class StressorWithClientStep implements ExecutableStep {
       HashMap<String, String> variables = null;
       if (csvRecords != null) {
         variables =
-            VariablesHelper.csvRowToVariables(csvHeader, csvRecords.get(threadIteration + 1));
+            VariablesHelper.csvRowToVariables(csvHeader, (CSVRecord)csvRecords.get(threadIteration + 1));
       }
 
       if (mode.equals("parallel")) {
@@ -84,7 +84,7 @@ public class StressorWithClientStep implements ExecutableStep {
         executors.add(client);
         client.start();
 
-      } else if (mode.equals("continuous")) {
+      } else if (mode.equals("sequential")) {
         ContinuosRestClient client = new ContinuosRestClient();
         executors.add(client);
         client.performRequest(method, VariableUtil.replaceVariablesInString(url, variables),

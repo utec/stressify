@@ -215,9 +215,9 @@ public class MainView extends javax.swing.JFrame {
 
   private ExportController exportController;
   private OpenController openController;
-  private JDialogAbout jDialogAbout;
-  private JPanelHttpSimpleStress panelHttpTest;
+  private JDialogAbout jDialogAbout;  
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private JPanelHttpSimpleStress panelHttpTest;
   private javax.swing.JMenuBar jMenuBarMain;
   private javax.swing.JMenu jMenuHelp;
   private javax.swing.JMenuItem jMenuItemAbout;
