@@ -11,17 +11,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import edu.utec.tools.stressify.common.AssertsHelper;
+import edu.utec.tools.stressify.common.SmartHttpClient;
+import edu.utec.tools.stressify.common.TimeHelper;
 import edu.utec.tools.stressify.core.BaseScriptExecutor;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
 
+  private final Logger logger = LogManager.getLogger(this.getClass());
+
   public String[] output;
   private CountDownLatch countDownLatch;
   private String method, url, assertScript, body;
-  private ArrayList<HashMap<String, String>> headers;
+  private HashMap<String, String> headers;
+
+  private SmartHttpClient smartHttpClient = new SmartHttpClient();
+  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss:SSS");
+  private HashMap<String, Object> response = null;
 
   @Override
   public void run() {
@@ -31,27 +43,38 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
 
   public void performRequest() {
 
-    output = new String[6];
+    String id = UUID.randomUUID().toString();
+    Date dateOnError = new Date();
+    try {
+      response = smartHttpClient.performRequest(method, url, body, headers);
+    } catch (Exception e) {
+      logger.error("Failed to execute http invocation with id: " + id, e);
+      response = new HashMap<String, Object>();
+      response.put("startDate", dateFormat.format(TimeHelper.millisToDate(dateOnError.getTime())));
+      response.put("log", "Connection error:" + e.getMessage());
+      return;
+    }
 
-    switch (method) {
+    response.put("id", id);
+    response.put("startDate",
+        dateFormat.format(TimeHelper.millisToDate((Long) response.get("startMillisDate"))));
+    response.put("endDate",
+        dateFormat.format(TimeHelper.millisToDate((Long) response.get("endMillisDate"))));
 
-    case "GET":
-      performGetRequest(url, headers, assertScript);
-      break;
-    case "POST":
-      performRequest(url, headers, body, assertScript, "POST");
-      break;
-    case "PUT":
-      performRequest(url, headers, body, assertScript, "PUT");
-      break;
-    default:
-      output[3] = "Error: Method not implemented yet:"+method;
-      break;
+    try {
+      AssertsHelper.evaluateSimpleAssert((String) response.get("responseBody"), assertScript);
+      response.put("asserts", true);
+    } catch (Exception e) {
+      logger.error("Failed to execute asserts on http response with id: " + id, e);
+      logger.error("http response with id: \n" + (String) response.get("responseBody"), e);
+      response.put("asserts", false);
+      response.put("log", "Assert error:" + e.getMessage());
+      return;
     }
   }
 
-  public void performRequest(String url, ArrayList<HashMap<String, String>> headers,
-          String body, String assertScript, String method) {
+  public void performRequest(String url, ArrayList<HashMap<String, String>> headers, String body,
+      String assertScript, String method) {
     try {
 
       Date start = new Date();
@@ -67,7 +90,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
       for (HashMap<String, String> headerData : headers) {
         Iterator<?> it = headerData.entrySet().iterator();
         while (it.hasNext()) {
-          Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
+          Map.Entry<?, ?> pair = (Map.Entry<?, ?>) it.next();
           con.setRequestProperty("" + pair.getKey(), "" + pair.getValue());
         }
       }
@@ -78,7 +101,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
       }
 
       int responseCode = con.getResponseCode();
-      System.out.println("\nSending '"+method+"' request to URL : " + url);
+      System.out.println("\nSending '" + method + "' request to URL : " + url);
       System.out.println("Response Code : " + responseCode);
 
       BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -128,7 +151,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
   }
 
   public void performGetRequest(String url, ArrayList<HashMap<String, String>> headers,
-          String assertScript) {
+      String assertScript) {
 
     try {
 
@@ -145,7 +168,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
       for (HashMap<String, String> headerData : headers) {
         Iterator<?> it = headerData.entrySet().iterator();
         while (it.hasNext()) {
-          Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
+          Map.Entry<?, ?> pair = (Map.Entry<?, ?>) it.next();
           con.setRequestProperty("" + pair.getKey(), "" + pair.getValue());
         }
       }
@@ -207,7 +230,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
     this.assertScript = assertScript;
   }
 
-  public void setHeaders(ArrayList<HashMap<String, String>> headers) {
+  public void setHeaders(HashMap<String, String> headers) {
     this.headers = headers;
   }
 
@@ -221,8 +244,7 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
 
   @Override
   public Object getResponse() {
-    // TODO Auto-generated method stub
-    return null;
+    return this.response;
   }
 
 }

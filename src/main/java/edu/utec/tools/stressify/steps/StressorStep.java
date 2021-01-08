@@ -10,8 +10,9 @@ import edu.utec.tools.stressify.common.VariablesHelper;
 import edu.utec.tools.stressify.core.BaseScriptExecutor;
 import edu.utec.tools.stressify.core.ExecutableStep;
 import edu.utec.tools.stressify.rest.ContinuosRestClient;
+import edu.utec.tools.stressify.rest.ParrallelRestClient;
 
-public class StressorWithClientStep implements ExecutableStep {
+public class StressorStep implements ExecutableStep {
 
   @SuppressWarnings("unchecked")
   public Object execute(HashMap<String, Object> parameters) throws Exception {
@@ -53,6 +54,7 @@ public class StressorWithClientStep implements ExecutableStep {
 
     if (onlyRecordsCsvSize == 0) {
       iterations = threads;
+      countDownLatch = new CountDownLatch(threads);
     } else if (threads > onlyRecordsCsvSize) {
       iterations = threads / (onlyRecordsCsvSize);
       extraIterations = threads % (onlyRecordsCsvSize);
@@ -73,15 +75,15 @@ public class StressorWithClientStep implements ExecutableStep {
 
       if (mode.equals("parallel")) {
 
-        // ParrallelRestClient client = new ParrallelRestClient();
-        // client.setAssertScript(VariableUtil.replaceVariablesInString(assertScript, variables));
-        // client.setMethod(method);
-        // client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
-        // client.setBody(VariableUtil.replaceVariablesInString(body, variables));
-        // client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
-        // client.setCountDownLatch(countDownLatch);
-        // executors.add(client);
-        // client.start();
+        ParrallelRestClient client = new ParrallelRestClient();
+        client.setAssertScript(VariableUtil.replaceVariablesInString(assertScript, variables));
+        client.setMethod(method);
+        client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
+        client.setBody(VariableUtil.replaceVariablesInString(body, variables));
+        client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
+        client.setCountDownLatch(countDownLatch);
+        executors.add(client);
+        client.start();
 
       } else if (mode.equals("sequential")) {
         ContinuosRestClient client = new ContinuosRestClient();

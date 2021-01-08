@@ -2,7 +2,6 @@ package edu.utec.tools.stressify.controllers.stress;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import javax.swing.JButton;

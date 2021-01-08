@@ -11,7 +11,7 @@ import edu.utec.common.performance.MeasureUtil;
 import edu.utec.tools.stressify.common.ScriptImports;
 import edu.utec.tools.stressify.steps.CSVReaderStep;
 import edu.utec.tools.stressify.steps.ReportStep;
-import edu.utec.tools.stressify.steps.StressorWithClientStep;
+import edu.utec.tools.stressify.steps.StressorStep;
 
 public class SimpleGraphicStressor {
   
@@ -86,7 +86,7 @@ public class SimpleGraphicStressor {
       assertScript = scriptBuilder.toString();
     }
 
-    StressorWithClientStep stressorWithClientStep = new StressorWithClientStep();
+    StressorStep stressorWithClientStep = new StressorStep();
     HashMap<String, Object> stressorStepParameters = new HashMap<String, Object>();
     stressorStepParameters.put("method", method);
     stressorStepParameters.put("url", url);
