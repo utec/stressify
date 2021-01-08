@@ -14,40 +14,79 @@ import java.util.Map;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import edu.utec.tools.stressify.common.AssertsHelper;
+import edu.utec.tools.stressify.common.SmartHttpClient;
+import edu.utec.tools.stressify.common.TimeHelper;
 import edu.utec.tools.stressify.core.BaseScriptExecutor;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 public class ContinuosRestClient implements BaseScriptExecutor {
-  
+
   private final Logger logger = LogManager.getLogger(this.getClass());
 
   public String[] output;
+  private SmartHttpClient smartHttpClient = new SmartHttpClient();
+  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss:SSS");
+  private HashMap<String, Object> response = null;
 
   public void performRequest(String method, String url, String body,
-          ArrayList<HashMap<String, String>> headers, String assertScript) {
+      HashMap<String, String> headers, String assertScript) {
+
+    String id = UUID.randomUUID().toString();
+    Date dateOnError = new Date();
+    try {
+      response = smartHttpClient.performRequest(method, url, body, headers);
+    } catch (Exception e) {
+      logger.error("Failed to execute http invocation with id: " + id, e);
+      response = new HashMap<String, Object>();
+      response.put("startDate", dateFormat.format(TimeHelper.millisToDate(dateOnError.getTime())));
+      response.put("log", "Connection error:" + e.getMessage());
+      return;
+    }
+
+    response.put("id", id);
+    response.put("startDate",
+        dateFormat.format(TimeHelper.millisToDate((Long) response.get("startMillisDate"))));
+    response.put("endDate",
+        dateFormat.format(TimeHelper.millisToDate((Long) response.get("endMillisDate"))));
+
+    try {
+      AssertsHelper.evaluateSimpleAssert((String) response.get("responseBody"), assertScript);
+      response.put("asserts", true);
+    } catch (Exception e) {
+      logger.error("Failed to execute asserts on http response with id: " + id, e);
+      logger.error("http response with id: \n" + (String) response.get("responseBody"), e);
+      response.put("asserts", false);
+      response.put("log", "Assert error:" + e.getMessage());
+      return;
+    }
+  }
+
+  public void performRequest2(String method, String url, String body,
+      ArrayList<HashMap<String, String>> headers, String assertScript) {
 
     output = new String[7];
 
     switch (method) {
 
-    case "GET":
-      performGetRequest(url, headers, assertScript);
-      break;
-    case "POST":
-      performRequest(url, headers, body, assertScript, "POST");
-      break;
-    case "PUT":
-      performRequest(url, headers, body, assertScript, "PUT");
-      break;
-    default:
-      output[3] = "Error: Method not implemented yet:"+method;
-      break;
+      case "GET":
+        performGetRequest(url, headers, assertScript);
+        break;
+      case "POST":
+        performRequest(url, headers, body, assertScript, "POST");
+        break;
+      case "PUT":
+        performRequest(url, headers, body, assertScript, "PUT");
+        break;
+      default:
+        output[3] = "Error: Method not implemented yet:" + method;
+        break;
     }
   }
 
-  public void performRequest(String url, ArrayList<HashMap<String, String>> headers,
-          String body, String assertScript, String method) {
+  public void performRequest(String url, ArrayList<HashMap<String, String>> headers, String body,
+      String assertScript, String method) {
     try {
 
       Date start = new Date();
@@ -63,7 +102,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       for (HashMap<String, String> headerData : headers) {
         Iterator<?> it = headerData.entrySet().iterator();
         while (it.hasNext()) {
-          Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
+          Map.Entry<?, ?> pair = (Map.Entry<?, ?>) it.next();
           con.setRequestProperty("" + pair.getKey(), "" + pair.getValue());
         }
       }
@@ -74,7 +113,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       }
 
       int responseCode = con.getResponseCode();
-      System.out.println("\nSending '"+method+"' request to URL : " + url);
+      System.out.println("\nSending '" + method + "' request to URL : " + url);
       System.out.println("Response Code : " + responseCode);
 
       BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -118,12 +157,12 @@ public class ContinuosRestClient implements BaseScriptExecutor {
     binding.setVariable("response", response);
     GroovyShell shell = new GroovyShell(binding);
     shell.evaluate(script);
-    //if no errors were thrown
+    // if no errors were thrown
     return true;
   }
 
   public void performGetRequest(String url, ArrayList<HashMap<String, String>> headers,
-          String assertScript) {
+      String assertScript) {
 
     try {
 
@@ -140,7 +179,7 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       for (HashMap<String, String> headerData : headers) {
         Iterator<?> it = headerData.entrySet().iterator();
         while (it.hasNext()) {
-          Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
+          Map.Entry<?, ?> pair = (Map.Entry<?, ?>) it.next();
           con.setRequestProperty("" + pair.getKey(), "" + pair.getValue());
         }
       }
@@ -161,9 +200,9 @@ public class ContinuosRestClient implements BaseScriptExecutor {
       long nowMillis = now.getTime();
 
       in.close();
-      
+
       output[0] = UUID.randomUUID().toString();
-          
+
       SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy:MM:ddd");
       output[1] = dateFormat1.format(start);
 
@@ -190,6 +229,10 @@ public class ContinuosRestClient implements BaseScriptExecutor {
   @Override
   public Object getOutput() {
     return output;
+  }
+
+  public HashMap<String, Object> getResponse() {
+    return response;
   }
 
 }

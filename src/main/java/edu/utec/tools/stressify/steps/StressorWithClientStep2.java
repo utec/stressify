@@ -78,7 +78,7 @@ public class StressorWithClientStep2 implements ExecutableStep {
           client.setMethod(method);
           client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
           client.setBody(VariableUtil.replaceVariablesInString(body, variables));
-          client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
+//          client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
           client.setCountDownLatch(countDownLatch);
           executors.add(client);
           client.start();
@@ -86,10 +86,10 @@ public class StressorWithClientStep2 implements ExecutableStep {
         } else if (mode.equals("continuous")) {
           ContinuosRestClient client = new ContinuosRestClient();
           executors.add(client);
-          client.performRequest(method, VariableUtil.replaceVariablesInString(url, variables),
-              VariableUtil.replaceVariablesInString(body, variables),
-              VariableUtil.replaceInHeaderValues(headers, variables),
-              VariableUtil.replaceVariablesInString(assertScript, variables));
+//          client.performRequest(method, VariableUtil.replaceVariablesInString(url, variables),
+//              VariableUtil.replaceVariablesInString(body, variables),
+//              VariableUtil.replaceInHeaderValues(headers, variables),
+//              VariableUtil.replaceVariablesInString(assertScript, variables));
         }
       }
 
@@ -102,17 +102,17 @@ public class StressorWithClientStep2 implements ExecutableStep {
             client.setMethod(method);
             client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
             client.setBody(VariableUtil.replaceVariablesInString(body, variables));
-            client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
+//            client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
             client.setCountDownLatch(countDownLatch);
             executors.add(client);
             client.start();
           } else if (mode.equals("continuous")) {
             ContinuosRestClient client = new ContinuosRestClient();
             executors.add(client);
-            client.performRequest(method, VariableUtil.replaceVariablesInString(url, variables),
-                VariableUtil.replaceVariablesInString(body, variables),
-                VariableUtil.replaceInHeaderValues(headers, variables),
-                VariableUtil.replaceVariablesInString(assertScript, variables));
+//            client.performRequest(method, VariableUtil.replaceVariablesInString(url, variables),
+//                VariableUtil.replaceVariablesInString(body, variables),
+//                VariableUtil.replaceInHeaderValues(headers, variables),
+//                VariableUtil.replaceVariablesInString(assertScript, variables));
           }
         }
       }

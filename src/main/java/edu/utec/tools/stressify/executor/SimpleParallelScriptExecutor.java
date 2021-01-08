@@ -51,4 +51,10 @@ public class SimpleParallelScriptExecutor extends Thread implements BaseScriptEx
     this.countDownLatch = countDownLatch;
   }
 
+  @Override
+  public Object getResponse() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

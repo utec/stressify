@@ -43,4 +43,10 @@ public class SimpleContinuousScriptExecutor implements BaseScriptExecutor {
     this.output = output;
   }
 
+  @Override
+  public Object getResponse() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

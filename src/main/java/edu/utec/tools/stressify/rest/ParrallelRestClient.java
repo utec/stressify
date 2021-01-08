@@ -219,4 +219,10 @@ public class ParrallelRestClient extends Thread implements BaseScriptExecutor {
     this.countDownLatch = countDownLatch;
   }
 
+  @Override
+  public Object getResponse() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

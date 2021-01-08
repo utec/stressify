@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,10 @@ public class SmartHttpClient {
 
   private final Logger logger = LogManager.getLogger(this.getClass());
 
+  // headers are colon-separated key-value pairs in clear-text string
+  // https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#General_format
   public HashMap<String, Object> performRequest(String method, String url, String body,
-      HashMap<String, ?> headers) throws Exception {
+      HashMap<String, String> headers) throws Exception {
 
     switch (method.toUpperCase()) {
 
@@ -37,6 +40,12 @@ public class SmartHttpClient {
   // https://stackoverflow.com/questions/25011927/how-to-get-response-body-using-httpurlconnection-when-code-other-than-2xx-is-re/25012003
   private HashMap<String, Object> performRequest(String url, HashMap<String, ?> headers,
       String body, String method) throws Exception {
+
+    long startMillisDate = 0l;
+    long endingMillisDate = 0l;
+    Date startDate = null;
+    Date endDate = null;
+
     try {
 
       URL obj = new URL(url);
@@ -60,6 +69,8 @@ public class SmartHttpClient {
         }
       }
 
+      startDate = new Date();
+      startMillisDate = TimeHelper.getDateAsLong(startDate);
       int responseCode = con.getResponseCode();
       logger.debug("Sending '" + method + "' request to URL : " + url);
       logger.debug("Response Code : " + responseCode);
@@ -80,13 +91,20 @@ public class SmartHttpClient {
         response.append(responseLine);
       }
 
+      endDate = new Date();
+      endingMillisDate = TimeHelper.getDateAsLong(endDate);
       br.close();
 
       logger.debug("Response body : " + response.toString());
 
       HashMap<String, Object> smartHttpClientResponse = new HashMap<String, Object>();
-      smartHttpClientResponse.put("status", responseCode);
-      smartHttpClientResponse.put("body", response.toString());
+      smartHttpClientResponse.put("startMillisDate", startMillisDate);
+      smartHttpClientResponse.put("endMillisDate", endingMillisDate);
+      smartHttpClientResponse.put("totalExecutionMillisTime", endingMillisDate - startMillisDate);
+
+      smartHttpClientResponse.put("responseStatus", responseCode);
+      // TODO: what if body is not a string?
+      smartHttpClientResponse.put("responseBody", response.toString());
 
       // get response headers
       Map<String, List<String>> map = con.getHeaderFields();

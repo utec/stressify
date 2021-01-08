@@ -1,19 +1,15 @@
 package edu.utec.tools.stressify.steps;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
 import org.apache.commons.csv.CSVRecord;
-
 import edu.utec.common.variable.VariableUtil;
 import edu.utec.tools.stressify.common.VariablesHelper;
 import edu.utec.tools.stressify.core.BaseScriptExecutor;
 import edu.utec.tools.stressify.core.ExecutableStep;
 import edu.utec.tools.stressify.rest.ContinuosRestClient;
-import edu.utec.tools.stressify.rest.ParrallelRestClient;
 
 public class StressorWithClientStep implements ExecutableStep {
 
@@ -23,11 +19,10 @@ public class StressorWithClientStep implements ExecutableStep {
     String method = (String) parameters.get("method");
     String url = (String) parameters.get("url");
     String body = (String) parameters.get("body");
-    ArrayList<HashMap<String, String>> headers =
-        (ArrayList<HashMap<String, String>>) parameters.get("headers");
-    
+    HashMap<String, String> headers = (HashMap<String, String>) parameters.get("headers");
+
     String assertScript = null;
-    if(parameters.get("assertScript")!=null) {
+    if (parameters.get("assertScript") != null) {
       assertScript = (String) parameters.get("assertScript");
     }
     String mode = (String) parameters.get("mode");
@@ -72,21 +67,21 @@ public class StressorWithClientStep implements ExecutableStep {
 
       HashMap<String, String> variables = null;
       if (csvRecords != null) {
-        variables =
-            VariablesHelper.csvRowToVariables(csvHeader, (CSVRecord)csvRecords.get(threadIteration + 1));
+        variables = VariablesHelper.csvRowToVariables(csvHeader,
+            (CSVRecord) csvRecords.get(threadIteration + 1));
       }
 
       if (mode.equals("parallel")) {
 
-        ParrallelRestClient client = new ParrallelRestClient();
-        client.setAssertScript(VariableUtil.replaceVariablesInString(assertScript, variables));
-        client.setMethod(method);
-        client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
-        client.setBody(VariableUtil.replaceVariablesInString(body, variables));
-        client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
-        client.setCountDownLatch(countDownLatch);
-        executors.add(client);
-        client.start();
+        // ParrallelRestClient client = new ParrallelRestClient();
+        // client.setAssertScript(VariableUtil.replaceVariablesInString(assertScript, variables));
+        // client.setMethod(method);
+        // client.setUrl(VariableUtil.replaceVariablesInString(url, variables));
+        // client.setBody(VariableUtil.replaceVariablesInString(body, variables));
+        // client.setHeaders(VariableUtil.replaceInHeaderValues(headers, variables));
+        // client.setCountDownLatch(countDownLatch);
+        // executors.add(client);
+        // client.start();
 
       } else if (mode.equals("sequential")) {
         ContinuosRestClient client = new ContinuosRestClient();
@@ -127,11 +122,10 @@ public class StressorWithClientStep implements ExecutableStep {
       countDownLatch.await();
     }
 
-    List<List<String>> dataStress = new ArrayList<List<String>>();
+    List<HashMap<String, Object>> dataStress = new ArrayList<HashMap<String, Object>>();
 
     for (BaseScriptExecutor scriptExecutor : executors) {
-      String[] output = (String[]) scriptExecutor.getOutput();
-      dataStress.add(Arrays.asList(output));
+      dataStress.add((HashMap<String, Object>) scriptExecutor.getResponse());
     }
 
     return dataStress;

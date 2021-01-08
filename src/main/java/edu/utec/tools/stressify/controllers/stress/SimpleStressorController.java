@@ -109,18 +109,17 @@ public class SimpleStressorController implements ActionListener {
     String body = jTextAreaPostBody.getText();
 
     TableModel model = this.jTableHeaders.getModel();
-    ArrayList<HashMap<String, String>> headers = new ArrayList<>();
+    HashMap<String, String> headers = new HashMap<String, String>();
     for (int row = 0; row < model.getRowCount(); row++) {
       HashMap<String, String> header = new HashMap<>();
       String key = null;
       for (int col = 0; col < model.getColumnCount(); col++) {
         if (col == 0) {
-          key = "" + model.getValueAt(row, col);
+          key = (String)model.getValueAt(row, col);
         } else if (col == 1) {
-          header.put(key, "" + model.getValueAt(row, col));
+          header.put(key, (String)model.getValueAt(row, col));
         }
       }
-      headers.add(header);
     }
 
     String assertScript = this.jTextAreaAssertResponseScript.getText();

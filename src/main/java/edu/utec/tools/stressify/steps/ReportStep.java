@@ -16,7 +16,8 @@ public class ReportStep implements ExecutableStep {
   @SuppressWarnings("unchecked")
   public Object execute(HashMap<String, Object> parameters) throws Exception {
 
-    List<List<String>> dataStress = (List<List<String>>) parameters.get("dataStress");
+    List<HashMap<String, Object>> dataStress =
+        (List<HashMap<String, Object>>) parameters.get("dataStress");
     List<String> headers = (List<String>) parameters.get("reportColumnValues");
     String reportFolderPath = (String) parameters.get("reportFolderPath");
     String reportName = createReportName(parameters);
@@ -28,7 +29,7 @@ public class ReportStep implements ExecutableStep {
 
     String headerString = csvUtil.convertListToString(headers, ",");
 
-    String reportData = csvUtil.convertDataListToCSVString(dataStress, "\n", ",");
+    String reportData = csvUtil.convertListMapToCsvString(dataStress, "\n", ",", headers);
     String headerAndReport = String.format("%s\n%s", headerString, reportData);
 
     writer.write(headerAndReport);
@@ -47,10 +48,10 @@ public class ReportStep implements ExecutableStep {
       String method = (String) parameters.get("method");
       String mode = (String) parameters.get("mode");
       String threads = (String) parameters.get("threads");
-      reportName = String.format("%s-%s-%s-%s-%s-%s.csv", (String) parameters.get("reportName"), url, method, mode,
-          threads, date);
+      reportName = String.format("%s-%s-%s-%s-%s-%s.csv", (String) parameters.get("reportName"),
+          url, method, mode, threads, date);
     } else {
-      reportName = (String) parameters.get("reportName")+".csv";
+      reportName = (String) parameters.get("reportName") + ".csv";
     }
 
     return reportName;

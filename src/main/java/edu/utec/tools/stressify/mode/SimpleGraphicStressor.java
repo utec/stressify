@@ -1,6 +1,5 @@
 package edu.utec.tools.stressify.mode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +36,7 @@ public class SimpleGraphicStressor {
   @SuppressWarnings("unchecked")
   public void perform(String csvDataPath, String reportFolderPath, String reportName,
       boolean addMetadataToReport, String reportColumns, String mode, String threads, String url,
-      String method, String body, ArrayList<HashMap<String, String>> headers, String assertScript)
+      String method, String body, HashMap<String, String> headers, String assertScript)
       throws Exception {
 
     clearLog();
@@ -97,8 +96,12 @@ public class SimpleGraphicStressor {
     stressorStepParameters.put("mode", mode);
     stressorStepParameters.put("threads", threads);
     stressorStepParameters.put("csvRecords", csvRecords);
-    List<List<String>> dataStress =
-        (List<List<String>>) stressorWithClientStep.execute(stressorStepParameters);
+    List<HashMap<String, Object>> dataStress =
+        (List<HashMap<String, Object>>) stressorWithClientStep.execute(stressorStepParameters);
+    
+    if(dataStress==null || dataStress.isEmpty()) {
+      throw new Exception("Stressor does not generated data for report.");
+    }
 
     ReportStep reportStep = new ReportStep();
     List<String> reportColumnValues = Arrays.asList(reportColumns.split(","));
