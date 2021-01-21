@@ -6,9 +6,9 @@ package edu.utec.tools.stressify.ui;
 
 import java.awt.Dialog;
 import javax.swing.JFrame;
-import edu.utec.tools.stressify.controllers.export.ExportController;
-import edu.utec.tools.stressify.controllers.open.OpenController;
-import edu.utec.tools.stressify.controllers.stress.SimpleStressorController;
+import edu.utec.tools.stressify.controllers.file.openproject.OpenController;
+import edu.utec.tools.stressify.controllers.file.saveproject.ExportController;
+import edu.utec.tools.stressify.controllers.project.stress.ProjectStressorController;
 
 /**
  *
@@ -120,7 +120,7 @@ public class MainView extends javax.swing.JFrame {
     jPanelMainContainer.repaint();
 
     // modified
-    new SimpleStressorController(this);
+    new ProjectStressorController(this);
 
   }// GEN-LAST:event_jMenuItemNewStressHumanActionPerformed
 
@@ -136,7 +136,7 @@ public class MainView extends javax.swing.JFrame {
     
     openController.performOpen();
     
-    new SimpleStressorController(this);
+    new ProjectStressorController(this);
 
   }// GEN-LAST:event_jMenuItemNewStressHumanActionPerformed
 
@@ -154,7 +154,7 @@ public class MainView extends javax.swing.JFrame {
     jDialogAbout.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
     jDialogAbout.pack();
-    jDialogAbout.setLocationRelativeTo(null);
+    jDialogAbout.setLocationRelativeTo(this);
     jDialogAbout.setVisible(true);
   }// GEN-LAST:event_jMenuItemAboutActionPerformed
 

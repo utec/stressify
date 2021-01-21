@@ -13,6 +13,13 @@ public class AssertsHelper {
 
   public static boolean evaluateSimpleAssert(String response, String script) {
     Binding binding = new Binding();
+    return evaluateSimpleAssert(response, script, binding);
+  }
+
+  public static boolean evaluateSimpleAssert(String response, String script, Binding binding) {
+    if (binding == null) {
+      binding = new Binding();
+    }
     binding.setVariable("response", response);
     GroovyShell shell = new GroovyShell(binding);
     shell.evaluate(script);

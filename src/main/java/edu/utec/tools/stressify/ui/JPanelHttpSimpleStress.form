@@ -60,8 +60,8 @@
                   <Component id="jTextFieldUrl" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPaneHttpOptions" min="-2" pref="234" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPaneHttpOptions" min="-2" pref="281" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelVirtualUsers" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldThreadsNumber" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -74,7 +74,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonStress" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane4" pref="50" max="32767" attributes="0"/>
+              <Component id="jScrollPane4" pref="14" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -101,6 +101,13 @@
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPaneHttpOptions">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+            <BevelBorder/>
+          </Border>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -118,7 +125,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="690" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="686" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -127,7 +134,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="178" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="221" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -173,7 +180,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="691" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="687" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -182,7 +189,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="179" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="222" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -220,7 +227,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="691" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="687" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -229,7 +236,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="179" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="222" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -289,12 +296,13 @@
                                           <Component id="jLabelReportName" min="-2" pref="230" max="-2" attributes="0"/>
                                           <Component id="jLabelReportFolderLocation" min="-2" pref="322" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="326" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="322" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonOpenReportFolderSelector" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jCheckBoxGenerateChartImages" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -323,6 +331,8 @@
                       <Component id="jTextFieldReportName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jCheckBoxAddMetadataToReportName" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBoxGenerateChartImages" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -363,6 +373,11 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBoxAddMetadataToReportName">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add url, method, mode, threads and date to the name of report"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBoxGenerateChartImages">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generate charts (.png)"/>
               </Properties>
             </Component>
           </SubComponents>

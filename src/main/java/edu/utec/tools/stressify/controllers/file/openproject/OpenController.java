@@ -1,4 +1,4 @@
-package edu.utec.tools.stressify.controllers.open;
+package edu.utec.tools.stressify.controllers.file.openproject;
 
 import java.io.File;
 import java.util.ArrayList;

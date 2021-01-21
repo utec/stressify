@@ -1,4 +1,4 @@
-package edu.utec.tools.stressify.controllers.export;
+package edu.utec.tools.stressify.controllers.file.saveproject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,7 +45,8 @@ public class ExportController {
     this.jTextAreaPostBody = this.mainView.getPanelHttpTest().getjTextAreaPostBody();
     this.jTextAreaAssertResponseScript =
         this.mainView.getPanelHttpTest().getjTextAreaAssertResponseScript();
-    this.jTextFieldReportFolderLocation = this.mainView.getPanelHttpTest().getjTextFieldReportFolderLocation();
+    this.jTextFieldReportFolderLocation =
+        this.mainView.getPanelHttpTest().getjTextFieldReportFolderLocation();
     this.jTextFieldReportName = this.mainView.getPanelHttpTest().getjTextFieldReportName();
     this.jTextFieldDataCsvFilePath =
         this.mainView.getPanelHttpTest().getjTextFieldDataCsvFilePath();
@@ -89,7 +90,7 @@ public class ExportController {
     if (userSelection == JFileChooser.APPROVE_OPTION) {
       File fileToSave = fileChooser.getSelectedFile();
       try {
-        FileOutputStream out = new FileOutputStream(fileToSave.getAbsolutePath());
+        FileOutputStream out = new FileOutputStream(addJsonExtension(fileToSave.getAbsolutePath()));
         out.write(jsonInString.getBytes());
         out.close();
         JOptionPane.showMessageDialog(new JFrame(),
@@ -108,12 +109,19 @@ public class ExportController {
     }
   }
 
+  private String addJsonExtension(String absoluteFileName) {
+    if (!absoluteFileName.endsWith(".json")) {
+      absoluteFileName += "json";
+    }
+    return absoluteFileName;
+  }
+
   private ArrayList<HttpHeader> getHeaders() {
     TableModel model = this.jTableHeaders.getModel();
     ArrayList<HttpHeader> headers = new ArrayList<>();
     for (int row = 0; row < model.getRowCount(); row++) {
       HttpHeader header = new HttpHeader();
-      for (int col = 0; col < model.getColumnCount(); col++) {        
+      for (int col = 0; col < model.getColumnCount(); col++) {
         if (col == 0) {
           header.setKey((String) model.getValueAt(row, col));
         } else if (col == 1) {
@@ -122,7 +130,7 @@ public class ExportController {
           header.setDescription((String) model.getValueAt(row, col));
         }
       }
-      if(header.getKey()!=null && header.getValue()!=null && header.getDescription()!=null) {
+      if (header.getKey() != null && header.getValue() != null && header.getDescription() != null) {
         headers.add(header);
       }
     }

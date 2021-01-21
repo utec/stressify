@@ -125,8 +125,8 @@ public class StressorWithClientStep2 implements ExecutableStep {
     List<List<String>> dataStress = new ArrayList<List<String>>();
 
     for (BaseScriptExecutor scriptExecutor : executors) {
-      String[] output = (String[]) scriptExecutor.getOutput();
-      dataStress.add(Arrays.asList(output));
+//      String[] output = (String[]) scriptExecutor.getOutput();
+//      dataStress.add(Arrays.asList(output));
     }
 
     return dataStress;

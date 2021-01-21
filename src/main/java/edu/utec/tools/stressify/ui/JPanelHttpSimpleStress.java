@@ -48,6 +48,7 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jTextFieldDataCsvFilePath = new javax.swing.JTextField();
         jButtonOpenDataFileSelector = new javax.swing.JButton();
         jCheckBoxAddMetadataToReportName = new javax.swing.JCheckBox();
+        jCheckBoxGenerateChartImages = new javax.swing.JCheckBox();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextAreaStressLog = new javax.swing.JTextArea();
         jLabelVirtualUsers = new javax.swing.JLabel();
@@ -58,6 +59,8 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jComboBoxMethod.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GET", "POST", "DELETE", "PUT" }));
 
         jButtonStress.setText("Start Stress");
+
+        jTabbedPaneHttpOptions.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jTableHeaders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,14 +87,14 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
             jPanelHeadersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeadersLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
                 .addGap(13, 13, 13))
         );
         jPanelHeadersLayout.setVerticalGroup(
             jPanelHeadersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeadersLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addGap(13, 13, 13))
         );
 
@@ -107,14 +110,14 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
             jPanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelBodyLayout.setVerticalGroup(
             jPanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -130,14 +133,14 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
             jPanelAssertResponseScriptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAssertResponseScriptLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelAssertResponseScriptLayout.setVerticalGroup(
             jPanelAssertResponseScriptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAssertResponseScriptLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -154,6 +157,8 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
         jButtonOpenDataFileSelector.setText("...");
 
         jCheckBoxAddMetadataToReportName.setText("Add url, method, mode, threads and date to the name of report");
+
+        jCheckBoxGenerateChartImages.setText("Generate charts (.png)");
 
         javax.swing.GroupLayout jPanelReportLayout = new javax.swing.GroupLayout(jPanelReport);
         jPanelReport.setLayout(jPanelReportLayout);
@@ -179,9 +184,10 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                                 .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelReportName, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabelReportFolderLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 326, Short.MAX_VALUE)))
+                                .addGap(0, 322, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonOpenReportFolderSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonOpenReportFolderSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBoxGenerateChartImages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelReportLayout.setVerticalGroup(
@@ -205,6 +211,8 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                 .addComponent(jTextFieldReportName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxAddMetadataToReportName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxGenerateChartImages)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -259,8 +267,8 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                     .addComponent(jComboBoxMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPaneHttpOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPaneHttpOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelVirtualUsers)
                     .addComponent(jTextFieldThreadsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,7 +279,7 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonStress)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -332,11 +340,20 @@ public class JPanelHttpSimpleStress extends javax.swing.JPanel {
     return jCheckBoxAddMetadataToReportName;
   }
 
+  public javax.swing.JButton getjButtonOpenDataFileSelector() {
+    return jButtonOpenDataFileSelector;
+  }
+
+  public javax.swing.JCheckBox getjCheckBoxGenerateChartImages() {
+    return jCheckBoxGenerateChartImages;
+  }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonOpenDataFileSelector;
     private javax.swing.JButton jButtonOpenReportFolderSelector;
     private javax.swing.JButton jButtonStress;
     private javax.swing.JCheckBox jCheckBoxAddMetadataToReportName;
+    private javax.swing.JCheckBox jCheckBoxGenerateChartImages;
     private javax.swing.JComboBox jComboBoxMethod;
     private javax.swing.JComboBox<String> jComboBoxStressMode;
     private javax.swing.JLabel jLabelDataCsvFilePath;

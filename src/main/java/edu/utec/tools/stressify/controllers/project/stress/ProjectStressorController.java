@@ -1,7 +1,8 @@
-package edu.utec.tools.stressify.controllers.stress;
+package edu.utec.tools.stressify.controllers.project.stress;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 import javax.swing.JButton;
@@ -16,10 +17,11 @@ import javax.swing.table.TableModel;
 import org.apache.logging.log4j.LogManager;
 import edu.utec.tools.stressify.common.AssertsHelper;
 import edu.utec.tools.stressify.common.StressorConstants;
+import edu.utec.tools.stressify.controllers.project.settings.ProjectSettingsBasicActionsController;
 import edu.utec.tools.stressify.mode.SimpleGraphicStressor;
 import edu.utec.tools.stressify.ui.MainView;
 
-public class SimpleStressorController implements ActionListener {
+public class ProjectStressorController implements ActionListener {
 
   private MainView mainView;
   private JTable jTableHeaders;
@@ -35,10 +37,12 @@ public class SimpleStressorController implements ActionListener {
   private JComboBox<?> jComboBoxMethod;
   private JComboBox<?> jComboBoxStressMode;
   private JCheckBox jCheckBoxAddMetadataToReportName;
+  private JCheckBox jCheckBoxGenerateChartImages;
+
 
   private SimpleGraphicStressor graphicStressor;
 
-  public SimpleStressorController(MainView mainView) {
+  public ProjectStressorController(MainView mainView) {
     super();
     this.mainView = mainView;
     initializeUiReferences();
@@ -63,11 +67,16 @@ public class SimpleStressorController implements ActionListener {
     this.jTextFieldThreadsNumber = this.mainView.getPanelHttpTest().getjTextFieldThreadsNumber();
     this.jCheckBoxAddMetadataToReportName =
         this.mainView.getPanelHttpTest().getjCheckBoxAddMetadataToReportName();
+    this.jCheckBoxGenerateChartImages =
+        this.mainView.getPanelHttpTest().getjCheckBoxGenerateChartImages();
 
   }
 
   public void initializeActionListeners() {
     jButtonStress.addActionListener(this);
+
+    ProjectSettingsBasicActionsController projectSettingsBasicActionsController =
+        new ProjectSettingsBasicActionsController(mainView);
   }
 
   @Override
@@ -86,7 +95,8 @@ public class SimpleStressorController implements ActionListener {
   public void stress() throws Exception {
 
     String uuid = UUID.randomUUID().toString();
-    System.setProperty("logFilename", String.format("/tmp/workspace/%s.log", uuid));
+    System.setProperty("logFilename", String.format("%s%sreport-%s.log",
+        jTextFieldReportFolderLocation.getText(), File.separator, uuid));
     org.apache.logging.log4j.core.LoggerContext ctx =
         (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
     ctx.reconfigure();
@@ -114,9 +124,9 @@ public class SimpleStressorController implements ActionListener {
       String key = null;
       for (int col = 0; col < model.getColumnCount(); col++) {
         if (col == 0) {
-          key = (String)model.getValueAt(row, col);
+          key = (String) model.getValueAt(row, col);
         } else if (col == 1) {
-          header.put(key, (String)model.getValueAt(row, col));
+          header.put(key, (String) model.getValueAt(row, col));
         }
       }
     }
@@ -125,10 +135,11 @@ public class SimpleStressorController implements ActionListener {
     String mode = jComboBoxStressMode.getSelectedItem().toString();
     String threads = jTextFieldThreadsNumber.getText();
     boolean addMetadataToReport = jCheckBoxAddMetadataToReportName.isSelected();
+    boolean generateImageCharts = jCheckBoxGenerateChartImages.isSelected();
 
-    graphicStressor.perform(csvDataPath, reportFolderPath, reportName + "-" + uuid,
-        addMetadataToReport, reportColumns, mode, threads, url, method, body, headers,
-        assertScript);
+    graphicStressor.perform(mainView, uuid, csvDataPath, reportFolderPath, reportName,
+        addMetadataToReport, generateImageCharts, reportColumns, mode, threads, url, method, body,
+        headers, assertScript);
   }
 
   public MainView getMainView() {

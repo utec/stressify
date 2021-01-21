@@ -42,6 +42,7 @@ public class JDialogAbout extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About");
+        setAlwaysOnTop(true);
         setResizable(false);
 
         jLabelAboutAppIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

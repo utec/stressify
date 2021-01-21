@@ -48,8 +48,8 @@ public class ReportStep implements ExecutableStep {
       String method = (String) parameters.get("method");
       String mode = (String) parameters.get("mode");
       String threads = (String) parameters.get("threads");
-      reportName = String.format("%s-%s-%s-%s-%s-%s.csv", (String) parameters.get("reportName"),
-          url, method, mode, threads, date);
+      reportName = String.format("%s-%s-%s-%s-%s-date-%s.csv",
+          (String) parameters.get("reportName"), url, method, mode, threads, date);
     } else {
       reportName = (String) parameters.get("reportName") + ".csv";
     }

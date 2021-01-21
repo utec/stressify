@@ -4,17 +4,20 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import edu.utec.common.performance.MeasureUtil;
 import edu.utec.tools.stressify.common.ScriptImports;
 import edu.utec.tools.stressify.steps.CSVReaderStep;
+import edu.utec.tools.stressify.steps.ChartStep;
 import edu.utec.tools.stressify.steps.ReportStep;
 import edu.utec.tools.stressify.steps.StressorStep;
+import edu.utec.tools.stressify.ui.MainView;
 
 public class SimpleGraphicStressor {
-  
+
   private final Logger logger = LogManager.getLogger(this.getClass());
 
   private JTextArea jTextAreaLog;
@@ -34,14 +37,14 @@ public class SimpleGraphicStressor {
   }
 
   @SuppressWarnings("unchecked")
-  public void perform(String csvDataPath, String reportFolderPath, String reportName,
-      boolean addMetadataToReport, String reportColumns, String mode, String threads, String url,
-      String method, String body, HashMap<String, String> headers, String assertScript)
-      throws Exception {
+  public void perform(MainView mainView, String uuid, String csvDataPath, String reportFolderPath,
+      String reportName, boolean addMetadataToReport, boolean generateImageCharts,
+      String reportColumns, String mode, String threads, String url, String method, String body,
+      HashMap<String, String> headers, String assertScript) throws Exception {
 
     clearLog();
     long before = new Date().getTime();
-    
+
     log("Stress starting...");
     if (csvDataPath == null || csvDataPath.equals("")) {
       log("Data csv file is not configured. Stresss will not use variables."
@@ -98,8 +101,8 @@ public class SimpleGraphicStressor {
     stressorStepParameters.put("csvRecords", csvRecords);
     List<HashMap<String, Object>> dataStress =
         (List<HashMap<String, Object>>) stressorWithClientStep.execute(stressorStepParameters);
-    
-    if(dataStress==null || dataStress.isEmpty()) {
+
+    if (dataStress == null || dataStress.isEmpty()) {
       throw new Exception("Stressor does not generated data for report.");
     }
 
@@ -109,7 +112,7 @@ public class SimpleGraphicStressor {
     reportStepParameters.put("dataStress", dataStress);
     reportStepParameters.put("reportColumnValues", reportColumnValues);
     reportStepParameters.put("reportFolderPath", reportFolderPath);
-    reportStepParameters.put("reportName", reportName);
+    reportStepParameters.put("reportName", reportName + "-" + uuid);
     reportStepParameters.put("addMetadataToReport", addMetadataToReport);
     reportStepParameters.put("method", method);
     reportStepParameters.put("url", url);
@@ -117,12 +120,26 @@ public class SimpleGraphicStressor {
     reportStepParameters.put("threads", threads);
     Object result = reportStep.execute(reportStepParameters);
 
+    if (generateImageCharts) {
+      ChartStep chartStep = new ChartStep();
+      HashMap<String, Object> chartStepParameters = new HashMap<String, Object>();
+      chartStepParameters.put("dataStress", dataStress);
+      chartStepParameters.put("reportFolderPath", reportFolderPath);
+      chartStepParameters.put("mode", mode);
+      chartStepParameters.put("threads", threads);
+      chartStepParameters.put("uuid", uuid);
+      chartStep.execute(chartStepParameters);
+    }
+
     long after = new Date().getTime();
 
     log("Stress completed.");
     log("");
     log("Status:" + result);
     log("Elapsed time:" + MeasureUtil.convertMillisMessage(after - before));
+
+    JOptionPane.showMessageDialog(mainView, "Stress completed", "Stressify",
+        JOptionPane.INFORMATION_MESSAGE);
 
   }
 }
