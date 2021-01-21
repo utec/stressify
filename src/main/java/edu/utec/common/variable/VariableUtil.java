@@ -1,9 +1,7 @@
 package edu.utec.common.variable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +9,11 @@ import java.util.regex.Pattern;
 public class VariableUtil {
 
   public static String replaceVariablesInString(String rawString,
-          HashMap<String, String> variables) {
+      HashMap<String, String> variables) {
+
+    if (variables == null || variables.isEmpty()) {
+      return rawString;
+    }
 
     String regex = "(\\$\\{[\\w\\^\\$\\s]+\\})";
     Matcher m = Pattern.compile(regex).matcher(rawString);
@@ -70,23 +72,14 @@ public class VariableUtil {
     return min + (max - min) * r.nextDouble();
   }
 
-  public static ArrayList<HashMap<String, String>> replaceInHeaderValues(
-          ArrayList<HashMap<String, String>> headers, HashMap<String, String> variables) {
+  public static HashMap<String, String> replaceInHeaderValues(HashMap<String, String> headers,
+      HashMap<String, String> variables) {
 
-    ArrayList<HashMap<String, String>> newHeaders = new ArrayList<HashMap<String, String>>();
-
-    for (HashMap<String, String> headerData : headers) {
-      HashMap<String, String> header = new HashMap<String, String>();
-      Iterator<?> it = headerData.entrySet().iterator();
-      while (it.hasNext()) {
-        Map.Entry<?,?> pair = (Map.Entry<?,?>) it.next();
-        header.put("" + pair.getKey(),
-                VariableUtil.replaceVariablesInString("" + pair.getValue(), variables));
-      }
-
-      newHeaders.add(header);
+    HashMap<String, String> newHeaders = new HashMap<String, String>();
+    for (Entry<?, ?> pair : headers.entrySet()) {
+      newHeaders.put((String) pair.getKey(),
+          VariableUtil.replaceVariablesInString((String) pair.getValue(), variables));
     }
-
     return newHeaders;
   }
 
