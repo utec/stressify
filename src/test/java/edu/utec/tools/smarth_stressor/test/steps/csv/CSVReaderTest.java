@@ -3,6 +3,7 @@ package edu.utec.tools.smarth_stressor.test.steps.csv;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -10,7 +11,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import edu.utec.common.csv.CSVUtil;
-import edu.utec.tools.fiveminutestressor.steps.CSVReaderStep;
+import edu.utec.tools.stressify.steps.CSVReaderStep;
 import junit.framework.TestCase;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -45,7 +46,9 @@ public class CSVReaderTest extends TestCase {
     writer.close();
 
     CSVReaderStep csvReaderStep = new CSVReaderStep();
-    csvRecords = (List<?>) csvReaderStep.execute(new String[] { path });
+    HashMap<String, Object> csvStepParameters = new HashMap<String, Object>();
+    csvStepParameters.put("csvDataPath", path);
+    csvRecords = (List<?>) csvReaderStep.execute(csvStepParameters);
 
     // validate not null
     assertNotNull(csvRecords);
